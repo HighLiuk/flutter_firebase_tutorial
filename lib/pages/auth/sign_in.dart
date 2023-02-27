@@ -29,7 +29,7 @@ class _SignInPageState extends State<SignInPage> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0,
-        title: const Text('Sign In'),
+        title: const Text('Sign in to Brew Crew'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
