@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "960173091219",
+    "project_id": "ninja-brew-crew-fc63a",
+    "storage_bucket": "ninja-brew-crew-fc63a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960173091219:android:229d2f90f4217cbd8a2066",
+        "android_client_info": {
+          "package_name": "com.highliuk.net_ninja_firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "960173091219-npeiingro347oisdrrvstg0es93ga73p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz21ZvAWizchgpFEXsEc16qsFEtzK5pHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "960173091219-npeiingro347oisdrrvstg0es93ga73p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
