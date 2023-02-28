@@ -16,6 +16,24 @@ class AuthService {
     return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
+  Future<User?> register(
+    String email,
+    String password,
+  ) async {
+    try {
+      final result = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      return _userFromFirebaseUser(result.user);
+    } catch (e) {
+      print(e.toString());
+
+      return null;
+    }
+  }
+
   Future<User?> signIn(
     String email,
     String password,
