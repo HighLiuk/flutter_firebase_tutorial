@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:net_ninja_firebase/state/with_email_and_password.dart';
 import 'package:net_ninja_firebase/services/auth.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -8,11 +9,8 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegisterPageState extends StateWithEmailAndPassword<RegisterPage> {
   final AuthService _auth = AuthService();
-
-  String email = '';
-  String password = '';
 
   Future<void> _register(
     String email,
@@ -35,12 +33,13 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: formKey,
       child: Column(
         children: [
           const SizedBox(height: 20),
-          _emailField(),
+          emailField(),
           const SizedBox(height: 20),
-          _passwordField(),
+          passwordField(),
           const SizedBox(height: 20),
           _registerButton(),
         ],
@@ -48,36 +47,13 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  TextFormField _emailField() {
-    return TextFormField(
-      decoration: const InputDecoration(
-        hintText: 'Email',
-      ),
-      onChanged: (value) {
-        setState(() {
-          email = value;
-        });
-      },
-    );
-  }
-
-  TextFormField _passwordField() {
-    return TextFormField(
-      decoration: const InputDecoration(
-        hintText: 'Password',
-      ),
-      obscureText: true,
-      onChanged: (value) {
-        setState(() {
-          password = value;
-        });
-      },
-    );
-  }
-
   ElevatedButton _registerButton() {
     return ElevatedButton(
       onPressed: () async {
+        if (!isValid) {
+          return;
+        }
+
         await _register(email, password);
       },
       child: const Text(
