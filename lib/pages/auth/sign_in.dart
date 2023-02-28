@@ -11,8 +11,14 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   final AuthService _auth = AuthService();
 
-  Future<void> _signInAnon() async {
-    final result = await _auth.signInAnon();
+  String email = '';
+  String password = '';
+
+  Future<void> _signIn(
+    String email,
+    String password,
+  ) async {
+    final result = await _auth.signIn(email, password);
 
     if (result == null) {
       print('Error signing in');
@@ -36,13 +42,58 @@ class _SignInPageState extends State<SignInPage> {
           horizontal: 50,
           vertical: 20,
         ),
-        child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.brown[50]),
-            foregroundColor: MaterialStateProperty.all(Colors.grey[900]),
+        child: Form(
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              _emailField(),
+              const SizedBox(height: 20),
+              _passwordField(),
+              const SizedBox(height: 20),
+              _signInButton(),
+            ],
           ),
-          onPressed: _signInAnon,
-          child: const Text('Sign In anonymously'),
+        ),
+      ),
+    );
+  }
+
+  TextFormField _emailField() {
+    return TextFormField(
+      decoration: const InputDecoration(
+        hintText: 'Email',
+      ),
+      onChanged: (value) {
+        setState(() {
+          email = value;
+        });
+      },
+    );
+  }
+
+  TextFormField _passwordField() {
+    return TextFormField(
+      decoration: const InputDecoration(
+        hintText: 'Password',
+      ),
+      obscureText: true,
+      onChanged: (value) {
+        setState(() {
+          password = value;
+        });
+      },
+    );
+  }
+
+  ElevatedButton _signInButton() {
+    return ElevatedButton(
+      onPressed: () async {
+        await _signIn(email, password);
+      },
+      child: const Text(
+        'SIGN IN',
+        style: TextStyle(
+          color: Colors.white,
         ),
       ),
     );
