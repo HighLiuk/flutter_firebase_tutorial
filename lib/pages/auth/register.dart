@@ -34,30 +34,16 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.brown[100],
-      appBar: AppBar(
-        backgroundColor: Colors.brown[400],
-        elevation: 0,
-        title: const Text('Register to Brew Crew'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 50,
-          vertical: 20,
-        ),
-        child: Form(
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              _emailField(),
-              const SizedBox(height: 20),
-              _passwordField(),
-              const SizedBox(height: 20),
-              _registerButton(),
-            ],
-          ),
-        ),
+    return Form(
+      child: Column(
+        children: [
+          const SizedBox(height: 20),
+          _emailField(),
+          const SizedBox(height: 20),
+          _passwordField(),
+          const SizedBox(height: 20),
+          _registerButton(),
+        ],
       ),
     );
   }
