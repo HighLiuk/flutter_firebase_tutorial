@@ -24,11 +24,7 @@ class _RegisterPageState extends StateWithEmailAndPassword<RegisterPage> {
       setState(() {
         error = 'Error registering';
       });
-
-      return;
     }
-
-    await _auth.signIn(email, password);
   }
 
   @override
