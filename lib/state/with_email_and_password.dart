@@ -27,9 +27,7 @@ abstract class StateWithEmailAndPassword<T extends StatefulWidget>
           email = value;
         });
       },
-      decoration: const InputDecoration(
-        hintText: 'Email',
-      ),
+      decoration: _inputDecoration('Email'),
     );
   }
 
@@ -52,8 +50,28 @@ abstract class StateWithEmailAndPassword<T extends StatefulWidget>
         });
       },
       obscureText: true,
-      decoration: const InputDecoration(
-        hintText: 'Password',
+      decoration: _inputDecoration('Password'),
+    );
+  }
+
+  InputDecoration _inputDecoration(
+    String hintText,
+  ) {
+    return InputDecoration(
+      hintText: hintText,
+      fillColor: Colors.white,
+      filled: true,
+      enabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.white,
+          width: 2,
+        ),
+      ),
+      focusedBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.brown,
+          width: 2,
+        ),
       ),
     );
   }
