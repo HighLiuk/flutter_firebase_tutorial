@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:net_ninja_firebase/state/with_email_and_password.dart';
 import 'package:net_ninja_firebase/services/auth.dart';
+import 'package:net_ninja_firebase/widgets/loading.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -13,22 +14,31 @@ class _RegisterPageState extends StateWithEmailAndPassword<RegisterPage> {
   final AuthService _auth = AuthService();
 
   String error = '';
+  bool loading = false;
 
-  Future<void> _register(
-    String email,
-    String password,
-  ) async {
+  Future<void> _register() async {
+    setState(() {
+      loading = true;
+    });
+
     final result = await _auth.register(email, password);
 
-    if (result == null) {
-      setState(() {
-        error = 'Error registering';
-      });
+    if (result != null) {
+      return;
     }
+
+    setState(() {
+      error = 'Error registering';
+      loading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (loading) {
+      return const Loading();
+    }
+
     return Form(
       key: formKey,
       child: Column(
@@ -53,7 +63,7 @@ class _RegisterPageState extends StateWithEmailAndPassword<RegisterPage> {
           return;
         }
 
-        await _register(email, password);
+        await _register();
       },
       child: const Text(
         'REGISTER',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:net_ninja_firebase/services/auth.dart';
 import 'package:net_ninja_firebase/state/with_email_and_password.dart';
+import 'package:net_ninja_firebase/widgets/loading.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -13,22 +14,31 @@ class _SignInPageState extends StateWithEmailAndPassword<SignInPage> {
   final AuthService _auth = AuthService();
 
   String error = '';
+  bool loading = false;
 
-  Future<void> _signIn(
-    String email,
-    String password,
-  ) async {
+  Future<void> _signIn() async {
+    setState(() {
+      loading = true;
+    });
+
     final result = await _auth.signIn(email, password);
 
-    if (result == null) {
-      setState(() {
-        error = 'Error signing in';
-      });
+    if (result != null) {
+      return;
     }
+
+    setState(() {
+      error = 'Error signing in';
+      loading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (loading) {
+      return const Loading();
+    }
+
     return Form(
       key: formKey,
       child: Column(
@@ -53,7 +63,7 @@ class _SignInPageState extends StateWithEmailAndPassword<SignInPage> {
           return;
         }
 
-        await _signIn(email, password);
+        await _signIn();
       },
       child: const Text(
         'SIGN IN',
