@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:net_ninja_firebase/models/user.dart';
+import 'package:net_ninja_firebase/services/database.dart';
 
 class AuthService {
   final firebase_auth.FirebaseAuth _auth = firebase_auth.FirebaseAuth.instance;
@@ -26,7 +27,17 @@ class AuthService {
         password: password,
       );
 
-      return _userFromFirebaseUser(result.user);
+      final user = _userFromFirebaseUser(result.user);
+
+      if (user == null) {
+        return null;
+      }
+
+      final db = DatabaseService(user.uid);
+
+      await db.updateUserData('0', 'new crew member', 100);
+
+      return user;
     } catch (e) {
       print(e.toString());
 
