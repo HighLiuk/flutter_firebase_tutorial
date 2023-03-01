@@ -12,6 +12,8 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends StateWithEmailAndPassword<SignInPage> {
   final AuthService _auth = AuthService();
 
+  String error = '';
+
   Future<void> _signIn(
     String email,
     String password,
@@ -19,10 +21,9 @@ class _SignInPageState extends StateWithEmailAndPassword<SignInPage> {
     final result = await _auth.signIn(email, password);
 
     if (result == null) {
-      print('Error signing in');
-    } else {
-      print('Signed in');
-      print(result);
+      setState(() {
+        error = 'Error signing in';
+      });
     }
   }
 
@@ -38,6 +39,8 @@ class _SignInPageState extends StateWithEmailAndPassword<SignInPage> {
           passwordField(),
           const SizedBox(height: 20),
           _signInButton(),
+          const SizedBox(height: 20),
+          _errorText(),
         ],
       ),
     );
@@ -57,6 +60,16 @@ class _SignInPageState extends StateWithEmailAndPassword<SignInPage> {
         style: TextStyle(
           color: Colors.white,
         ),
+      ),
+    );
+  }
+
+  Text _errorText() {
+    return Text(
+      error,
+      style: const TextStyle(
+        color: Colors.red,
+        fontSize: 14,
       ),
     );
   }

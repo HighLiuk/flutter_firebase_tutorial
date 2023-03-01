@@ -12,6 +12,8 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends StateWithEmailAndPassword<RegisterPage> {
   final AuthService _auth = AuthService();
 
+  String error = '';
+
   Future<void> _register(
     String email,
     String password,
@@ -19,13 +21,12 @@ class _RegisterPageState extends StateWithEmailAndPassword<RegisterPage> {
     final result = await _auth.register(email, password);
 
     if (result == null) {
-      print('Error registering');
+      setState(() {
+        error = 'Error registering';
+      });
 
       return;
     }
-
-    print('Registered');
-    print(result);
 
     await _auth.signIn(email, password);
   }
@@ -42,6 +43,8 @@ class _RegisterPageState extends StateWithEmailAndPassword<RegisterPage> {
           passwordField(),
           const SizedBox(height: 20),
           _registerButton(),
+          const SizedBox(height: 20),
+          _errorText(),
         ],
       ),
     );
@@ -61,6 +64,16 @@ class _RegisterPageState extends StateWithEmailAndPassword<RegisterPage> {
         style: TextStyle(
           color: Colors.white,
         ),
+      ),
+    );
+  }
+
+  Text _errorText() {
+    return Text(
+      error,
+      style: const TextStyle(
+        color: Colors.red,
+        fontSize: 14,
       ),
     );
   }
