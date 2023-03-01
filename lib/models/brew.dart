@@ -8,4 +8,12 @@ class Brew {
     required this.name,
     required this.strength,
   });
+
+  factory Brew.fromMap(Map<String, dynamic> data) {
+    return Brew(
+      sugars: data['sugars'] ?? '0',
+      name: data['name'] ?? '',
+      strength: data['strength'] ?? 0,
+    );
+  }
 }

@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:net_ninja_firebase/models/brew.dart';
 import 'package:net_ninja_firebase/models/user.dart';
 import 'package:net_ninja_firebase/services/auth.dart';
 import 'package:net_ninja_firebase/services/database.dart';
@@ -15,8 +15,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User?>(context);
 
-    return StreamProvider<QuerySnapshot?>.value(
-      initialData: null,
+    return StreamProvider<List<Brew>>.value(
+      initialData: const [],
       value: DatabaseService(user!.uid).brewsStream,
       child: Scaffold(
         backgroundColor: Colors.brown[100],
