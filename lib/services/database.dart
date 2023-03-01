@@ -18,4 +18,6 @@ class DatabaseService {
       'strength': strength,
     });
   }
+
+  Stream<QuerySnapshot> get brewsStream => brews.snapshots();
 }
