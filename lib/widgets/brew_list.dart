@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:net_ninja_firebase/models/brew.dart';
+import 'package:net_ninja_firebase/widgets/brew_tile.dart';
 import 'package:provider/provider.dart';
 
 class BrewList extends StatefulWidget {
@@ -14,12 +15,9 @@ class _BrewListState extends State<BrewList> {
   Widget build(BuildContext context) {
     final brews = Provider.of<List<Brew>>(context);
 
-    for (final brew in brews) {
-      print(brew.name);
-      print(brew.sugars);
-      print(brew.strength);
-    }
-
-    return Container();
+    return ListView.builder(
+      itemCount: brews.length,
+      itemBuilder: (context, i) => BrewTile(brew: brews[i]),
+    );
   }
 }
