@@ -57,7 +57,7 @@ class _SettingsFormState extends State<SettingsForm> {
               const SizedBox(height: 20),
               _strengthField,
               const SizedBox(height: 20),
-              _submitButton,
+              _submitButton(context),
             ],
           ),
         );
@@ -127,14 +127,28 @@ class _SettingsFormState extends State<SettingsForm> {
     );
   }
 
-  ElevatedButton get _submitButton {
+  ElevatedButton _submitButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
         if (!isValid) {
           return;
         }
 
-        print('$_name, $_sugars, $_strength');
+        final user = Provider.of<User>(context, listen: false);
+
+        await DatabaseService(
+          user.uid,
+        ).updateUserData(
+          _sugars!,
+          _name!,
+          _strength!,
+        );
+
+        if (!mounted) {
+          return;
+        }
+
+        Navigator.pop(context);
       },
       child: const Text(
         'Update',
