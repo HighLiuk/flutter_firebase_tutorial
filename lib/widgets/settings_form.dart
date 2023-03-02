@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:net_ninja_firebase/common/input_decoration.dart';
+import 'package:net_ninja_firebase/models/user.dart';
+import 'package:net_ninja_firebase/models/user_data.dart';
+import 'package:net_ninja_firebase/services/database.dart';
+import 'package:net_ninja_firebase/widgets/loading.dart';
+import 'package:provider/provider.dart';
 
 class SettingsForm extends StatefulWidget {
   const SettingsForm({super.key});
@@ -13,29 +18,50 @@ class _SettingsFormState extends State<SettingsForm> {
   final List<String> sugars = ['0', '1', '2', '3', '4'];
 
   // Form fields
-  String _name = '';
-  String _sugars = '0';
-  int _strength = 100;
+  late String _name;
+  late String _sugars;
+  late int _strength;
 
   bool get isValid => formKey.currentState?.validate() ?? false;
 
+  Stream<UserData> _userDataStream(BuildContext context) {
+    final user = Provider.of<User>(context);
+
+    return DatabaseService(user.uid).userDataStream;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Column(
-        children: [
-          _title,
-          const SizedBox(height: 20),
-          _nameField,
-          const SizedBox(height: 20),
-          _sugarsField,
-          const SizedBox(height: 20),
-          _strengthField,
-          const SizedBox(height: 20),
-          _submitButton,
-        ],
-      ),
+    return StreamBuilder(
+      stream: _userDataStream(context),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const Loading();
+        }
+
+        final userData = snapshot.data as UserData;
+
+        _name = userData.name;
+        _sugars = userData.sugars;
+        _strength = userData.strength;
+
+        return Form(
+          key: formKey,
+          child: Column(
+            children: [
+              _title,
+              const SizedBox(height: 20),
+              _nameField,
+              const SizedBox(height: 20),
+              _sugarsField,
+              const SizedBox(height: 20),
+              _strengthField,
+              const SizedBox(height: 20),
+              _submitButton,
+            ],
+          ),
+        );
+      },
     );
   }
 
