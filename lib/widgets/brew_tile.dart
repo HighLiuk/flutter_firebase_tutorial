@@ -28,8 +28,22 @@ class BrewTile extends StatelessWidget {
       ),
       title: Text(brew.name),
       subtitle: Text(
-        'Takes ${brew.sugars} sugar(s)',
+        'Takes ${pluralizeSugar(brew.sugars)}',
       ),
     );
+  }
+
+  String pluralizeSugar(String sugars) {
+    final count = int.parse(sugars);
+
+    if (count == 0) {
+      return 'no sugar';
+    }
+
+    if (count == 1) {
+      return '1 sugar';
+    }
+
+    return '$sugars sugars';
   }
 }
