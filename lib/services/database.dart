@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:net_ninja_firebase/models/brew.dart';
+import 'package:net_ninja_firebase/models/user_data.dart';
 
 class DatabaseService {
   final String uid;
@@ -29,5 +30,17 @@ class DatabaseService {
 
       return Brew.fromMap(data as Map<String, dynamic>);
     }).toList();
+  }
+
+  Stream<UserData> get userDataStream =>
+      brews.doc(uid).snapshots().map(_userDataFromSnapshot);
+
+  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+    final data = snapshot.data() ?? {};
+
+    return UserData.fromUidAndMap(
+      uid,
+      data as Map<String, dynamic>,
+    );
   }
 }
