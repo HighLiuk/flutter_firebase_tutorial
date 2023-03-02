@@ -18,9 +18,9 @@ class _SettingsFormState extends State<SettingsForm> {
   final List<String> sugars = ['0', '1', '2', '3', '4'];
 
   // Form fields
-  late String _name;
-  late String _sugars;
-  late int _strength;
+  String? _name;
+  String? _sugars;
+  int? _strength;
 
   bool get isValid => formKey.currentState?.validate() ?? false;
 
@@ -41,9 +41,9 @@ class _SettingsFormState extends State<SettingsForm> {
 
         final userData = snapshot.data as UserData;
 
-        _name = userData.name;
-        _sugars = userData.sugars;
-        _strength = userData.strength;
+        _name ??= userData.name;
+        _sugars ??= userData.sugars;
+        _strength ??= userData.strength;
 
         return Form(
           key: formKey,
@@ -118,12 +118,12 @@ class _SettingsFormState extends State<SettingsForm> {
           _strength = value.round();
         });
       },
-      value: _strength.toDouble(),
+      value: _strength?.toDouble() ?? 100,
       min: 100,
       max: 900,
       divisions: 8,
-      activeColor: Colors.brown[_strength],
-      inactiveColor: Colors.brown[_strength],
+      activeColor: Colors.brown[_strength ?? 100],
+      inactiveColor: Colors.brown[_strength ?? 100],
     );
   }
 
