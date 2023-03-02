@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:net_ninja_firebase/common/input_decoration.dart';
 
 abstract class StateWithEmailAndPassword<T extends StatefulWidget>
     extends State<T> {
@@ -27,7 +28,7 @@ abstract class StateWithEmailAndPassword<T extends StatefulWidget>
           email = value;
         });
       },
-      decoration: _inputDecoration('Email'),
+      decoration: inputDecoration('Email'),
     );
   }
 
@@ -50,29 +51,7 @@ abstract class StateWithEmailAndPassword<T extends StatefulWidget>
         });
       },
       obscureText: true,
-      decoration: _inputDecoration('Password'),
-    );
-  }
-
-  InputDecoration _inputDecoration(
-    String hintText,
-  ) {
-    return InputDecoration(
-      hintText: hintText,
-      fillColor: Colors.white,
-      filled: true,
-      enabledBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.white,
-          width: 2,
-        ),
-      ),
-      focusedBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.brown,
-          width: 2,
-        ),
-      ),
+      decoration: inputDecoration('Password'),
     );
   }
 }
