@@ -25,31 +25,50 @@ class HomePage extends StatelessWidget {
           elevation: 0,
           title: const Text('Brew Crew'),
           actions: [
-            TextButton.icon(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all(Colors.white),
-              ),
-              icon: const Icon(Icons.person),
-              label: const Text('Logout'),
-              onPressed: _auth.signOut,
-            ),
-            TextButton.icon(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all(Colors.white),
-              ),
-              icon: const Icon(Icons.settings),
-              label: const Text('Settings'),
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: _modalBuilder,
-                );
-              },
-            ),
+            _logout(),
+            _settings(context),
           ],
         ),
         body: const BrewList(),
       ),
+    );
+  }
+
+  Widget _menu({
+    required IconData icon,
+    required String label,
+    required VoidCallback onPressed,
+  }) {
+    return TextButton.icon(
+      style: ButtonStyle(
+        foregroundColor: MaterialStateProperty.all(Colors.white),
+      ),
+      icon: Icon(icon),
+      label: Text(label),
+      onPressed: onPressed,
+    );
+  }
+
+  Widget _logout() {
+    return _menu(
+      icon: Icons.person,
+      label: 'Logout',
+      onPressed: () async {
+        await _auth.signOut();
+      },
+    );
+  }
+
+  Widget _settings(BuildContext context) {
+    return _menu(
+      icon: Icons.settings,
+      label: 'Settings',
+      onPressed: () {
+        showModalBottomSheet(
+          context: context,
+          builder: _modalBuilder,
+        );
+      },
     );
   }
 
