@@ -33,10 +33,33 @@ class HomePage extends StatelessWidget {
               label: const Text('Logout'),
               onPressed: _auth.signOut,
             ),
+            TextButton.icon(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+              ),
+              icon: const Icon(Icons.settings),
+              label: const Text('Settings'),
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: _modalBuilder,
+                );
+              },
+            ),
           ],
         ),
         body: const BrewList(),
       ),
+    );
+  }
+
+  Widget _modalBuilder(context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 60,
+        vertical: 20,
+      ),
+      child: const Text('Bottom Sheet'),
     );
   }
 }
