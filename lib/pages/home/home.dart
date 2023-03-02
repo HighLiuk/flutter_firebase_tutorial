@@ -4,6 +4,7 @@ import 'package:net_ninja_firebase/models/user.dart';
 import 'package:net_ninja_firebase/services/auth.dart';
 import 'package:net_ninja_firebase/services/database.dart';
 import 'package:net_ninja_firebase/widgets/brew_list.dart';
+import 'package:net_ninja_firebase/widgets/settings_form.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -78,7 +79,7 @@ class HomePage extends StatelessWidget {
         horizontal: 60,
         vertical: 20,
       ),
-      child: const Text('Bottom Sheet'),
+      child: const SettingsForm(),
     );
   }
 }
