@@ -65,10 +65,12 @@ class _SettingsFormState extends State<SettingsForm> {
     );
   }
 
-  Text get _title {
-    return const Text(
-      'Update your brew settings',
-      style: TextStyle(fontSize: 18),
+  Widget get _title {
+    return const Center(
+      child: Text(
+        'Update your brew settings',
+        style: TextStyle(fontSize: 18),
+      ),
     );
   }
 
